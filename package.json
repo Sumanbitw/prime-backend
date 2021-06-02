@@ -1,0 +1,25 @@
+{
+  "name": "prime-backend",
+  "version": "1.0.0",
+  "description": "This is video library backend",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.12",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sumanbitw/prime-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sumanbitw/prime-backend/issues"
+  },
+  "homepage": "https://github.com/Sumanbitw/prime-backend#readme"
+}
