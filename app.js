@@ -18,5 +18,8 @@ app.use(cors())
 
 app.use('/videos', videoRoute)
 
+app.get('/', (req,res) => {
+    res.status(200).json({ message : "Prime backend" })
+})
 
 app.listen(port)
