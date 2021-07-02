@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
-const VideoSchema = mongoose.Schema({
-    _id : mongoose.Schema.Types.ObjectId,
+const VideoSchema = new mongoose.Schema({
     videoId : { type : String, required : true },
     categories : [{ type : String }],
     channelName : { type : String, required : true },
