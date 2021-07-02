@@ -1,11 +1,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const app = require('../app')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken');
 require("dotenv/config")
-const User = require("../models/user-model")
+const User = require("../models/user.model")
 
 router.post('/',async (req, res, next) => {
     const user = await User.findOne({ email : req.body.email })

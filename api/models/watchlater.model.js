@@ -1,4 +1,4 @@
-const mongoose = require(mongoose)
+const mongoose = require("mongoose")
 
 const watchlaterSchema = new mongoose.Schema({
     user : { type : mongoose.Schema.Types.ObjectId, ref : "User" },
@@ -6,4 +6,4 @@ const watchlaterSchema = new mongoose.Schema({
 }, { timestamps : true }
 )
 
-module.exports = mongoose.model("Bookmark", watchlaterSchema)
+module.exports = mongoose.model("Watchlater", watchlaterSchema)

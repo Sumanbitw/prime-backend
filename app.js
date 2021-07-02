@@ -2,22 +2,19 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
+require("dotenv/config")
 
 const port = process.env.PORT || 3020
 const videoRoute = require('./api/routes/router.video')
 const playlistRoute = require("./api/routes/router.playlist")
-const signupRoute = require("./api/routes/signup.router")
-const loginRoute = require("./api/routes/login.router")
+const signupRoute = require("./api/routes/router.signup")
+const loginRoute = require("./api/routes/router.login")
 const bookmarkRoute  = require("./api/routes/router.bookmark")
 const watchlaterRoute = require("./api/routes/router.watchlater")
 
 
-mongoose.connect("mongodb+srv://reach2suman:suman-neoG@cluster0.repe4.mongodb.net/test",
-    {
-        useNewUrlParser : true,
-        useUnifiedTopology: true
-    },
-    console.log("connected to db")
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser : true, useUnifiedTopology: true },
+    () => console.log("connected to db")
 )
 app.use(express.urlencoded({extended :true}))
 app.use(express.json())
