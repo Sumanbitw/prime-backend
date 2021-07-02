@@ -17,7 +17,6 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     const video = new Video ({
-        _id : new mongoose.Types.ObjectId(),
         videoId : req.body.videoId,
         categories : req.body.categories,
         channelName :req.body.channelName,
