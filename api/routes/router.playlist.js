@@ -24,47 +24,44 @@ router.get("/:userId" , async(req, res) => {
     }
 })
 
-router.post("/:userId/:playlistId", async( req, res) => {
-    try{
-        const { userId, playlistId } = req.params
-        const { videoId } = req.body
-        const playlist = await Playlist.find({ user : userId, _id : playlistId })
-        const isVideoInPlaylist = playlist.videos.includes(videoId)
-        if(!isVideoInPlaylist){
-            const videoAddedInPlaylist = playlist.videos.push(videoId) 
-            const updatedPlaylist = await videoAddedInPlaylist.save()
-            res.json({ success : true, message : "Video added in playlist ", playlist : updatedPlaylist})
-        }
-    }catch(error){
-        res.json({ success : false, messgae : "Cannot add videos in playlist", error : error })
+router.post("/:playlistId", async( req, res) => {
+
+    const { playlistId } = req.params;
+    const { videoId } = req.body;
+    try {
+      const playlist = await Playlist.findOne({ _id: playlistId });
+      const isVideoInPlaylist = playlist.videos.includes(videoId);
+
+      isVideoInPlaylist 
+      ? playlist.videos.pull(videoId) 
+      : playlist.videos.push(videoId);
+
+      await playlist.save();
+      res.json({
+        success: true,
+        updatedPlaylist: playlist,
+        message: 'Playlist updated'
+      })
+
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: 'Unable to update playlist' })
     }
+  
 })
 
-router.delete("/:userId/:playlistId", async(req, res) => {
-    const { userId, playlistId } = req.params
+router.delete("/:playlistId", async(req, res) => {
+    const { playlistId } = req.params
     try{
-        const removedPlaylist = await Playlist.deleteOne({ user : userId })
+        const removedPlaylist = await Playlist.deleteOne({ _id : playlistId })
         res.json({ success : true, message : "Playlist removed", playlist : removedPlaylist })
     }catch(error) {
         res.json({ success : false, message : "Unable to delete playlist", error : error })
     }
 })
 
-router.delete("/:userId/:playlistId", async(req, res) => {
-    const { userId, playlistId } = req.params
-    const { videoId } = req.body 
-    try{
-        const playlist = await Playlist.find({ user : userId, playlist : playlistId })
-        const isVideoInPlaylist = playlist.videos.includes(videoId)
-        const removedVideos = await isVideoInPlaylist.deleteOne()
-        res.json({ success : true, message : "Video removed", playlist : removedVideos })
-    }catch(error) {
-        res.json({ success : false, message : "Unable to delete playlist", error : error })
-    }
-})
-
-router.patch("/:userId/:playlistId", async (req, res) => {
-    const { userId, playlistId } = req.params
+router.patch("/:playlistId", async (req, res) => {
+    const { playlistId } = req.params
     const { newName } = req.body
     try {
         const updatePlaylistName = await cartModels.updateOne({ user : userId, playlist : playlistId }, { $set : { name : newName }})
