@@ -17,9 +17,9 @@ router.post('/',async (req, res, next) => {
         let token = jwt.sign({ userId : user._id, email : user.email,
         }, process.env.JWT_KEY, {expiresIn : "1d"})
         token=`Bearer ${token}`;
-        res.status(200).json({ message : "Succesfully login", user : user, token : token})
+        res.status(200).json({ message : "Succesfully login", user : user, token : token, success : true })
         }catch(error) {
-            res.status(500).json({ message : error })
+            res.status(500).json({ success : false, message : "Unable to login ", error : error })
     }
 })
     
