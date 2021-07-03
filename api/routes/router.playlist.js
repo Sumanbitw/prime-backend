@@ -25,11 +25,11 @@ router.get("/:userId" , async(req, res) => {
 })
 
 router.post("/:userId/:playlistId", async( req, res) => {
-    const { userId, playlistId } = req.params
-    const { videoId } = req.body
-    const playlist = await Playlist.find({ user : userId, _id : playlistId })
-    const isVideoInPlaylist = playlist.videos.includes(videoId)
     try{
+        const { userId, playlistId } = req.params
+        const { videoId } = req.body
+        const playlist = await Playlist.find({ user : userId, _id : playlistId })
+        const isVideoInPlaylist = playlist.videos.includes(videoId)
         if(!isVideoInPlaylist){
             const videoAddedInPlaylist = playlist.videos.push(videoId) 
             const updatedPlaylist = await videoAddedInPlaylist.save()
