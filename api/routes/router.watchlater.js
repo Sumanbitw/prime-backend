@@ -7,7 +7,7 @@ const Video = require("../models/video.model")
 router.get("/:userId", async ( req,res ) => {
     try {
         const { userId } = req.params
-        const userVideo = await watchlaterModels.find({ user : { _id : userId } }).populate('video').exec();
+        const userVideo = await watchlaterVideos.find({ user : { _id : userId } }).populate('video').exec();
         res.json({ watchlaterVideo : userVideo, success : true, message : "Video found" })
     } catch ( err ) {
         res.json({ message : err, success : false, message : "Video not found" })
