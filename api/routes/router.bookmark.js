@@ -2,6 +2,7 @@ const express = require("express")
 const bookmarkVideos = require("../models/bookmark.model")
 const mongoose = require("mongoose")
 const router = express.Router()
+const Video = require("../models/video.model")
 
 router.get("/:userId", async ( req,res ) => {
     try {
