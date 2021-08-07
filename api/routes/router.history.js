@@ -1,12 +1,13 @@
 const express = require("express")
-const bookmarkVideos = require("../models/bookmark.model")
+const history = require("../models/history.model")
 const mongoose = require("mongoose")
 const router = express.Router()
+const Video = require("../models/video.model")
 
 router.get("/:userId", async ( req,res ) => {
     try {
         const { userId } = req.params
-        const userVideos = await bookmarkVideos.find({ user : {_id : userId } }).populate('Video').exec();
+        const userVideos = await history.find({ user : {_id : userId } }).populate('Video').exec();
         res.json({ video : userVideos, success : true, message : "Videos fetched" })
     } catch ( err ) {
         res.json({ message : err, success : false, message : " Failed to fetch videos" })
@@ -14,7 +15,7 @@ router.get("/:userId", async ( req,res ) => {
 })
 
 router.post("/:userId/:videoId", async (req,res) => {
-    const { videoId } = req.params
+  const { videoId } = req.params
   try {
     const video = await Video.findOne({ _id: videoId });
     const isVideoPresent = video.includes(req.body);
@@ -27,12 +28,12 @@ router.post("/:userId/:videoId", async (req,res) => {
     res.json({
       success: true,
       updatedVideo: video,
-      message: 'Bookmark videos updated'
+      message: 'History updated'
     })
 
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: 'Unable to update Bookmark videos' })
+    res.json({ success: false, message: 'Unable to update history' })
   }
 })
 
