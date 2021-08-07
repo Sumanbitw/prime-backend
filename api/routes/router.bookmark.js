@@ -7,7 +7,7 @@ const Video = require("../models/video.model")
 router.get("/:userId", async ( req,res ) => {
     try {
         const { userId } = req.params
-        const userVideos = await bookmarkVideos.find({ user : {_id : userId } }).populate('Video').exec();
+        const userVideos = await bookmarkVideos.find({ user : {_id : userId } }).populate('video').exec();
         res.json({ video : userVideos, success : true, message : "Videos fetched" })
     } catch ( err ) {
         res.json({ message : err, success : false, message : " Failed to fetch videos" })
