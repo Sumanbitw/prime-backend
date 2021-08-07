@@ -19,10 +19,10 @@ router.post("/", async (req, res, next) => {
             const token = jwt.sign({ userId : savedUser._id, email : savedUser.email
             }, process.env.JWT_KEY, {expiresIn : "1d"})
             console.log(savedUser)
-            res.status(201).json({ success : true, message : "Account created ", token : token, user : savedUser })
+            res.json({ success : true, message : "Account created ", token : token, user : savedUser })
         }catch(error) {
             console.log(error)
-            res.status(500).json({
+            res.json({
                 success : false,
                 message : "Unable to create account",
                 error : error
