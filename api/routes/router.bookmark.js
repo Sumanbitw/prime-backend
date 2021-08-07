@@ -28,7 +28,7 @@ router.post("/", async (req,res) => {
 router.delete("/:userId/:videoId", async (req, res) => {
     const { userId, videoId } = req.params
     try {
-        const removedBookmarkVideos = await bookmarkVideos.remove({ user : userId, videoId : videoId })
+        const removedBookmarkVideos = await bookmarkVideos.remove({ user : userId, video : videoId })
         console.log(removedBookmarkVideos)
         res.json({ success : true, message : "Videos removed", removedBookmarkVideos : removedBookmarkVideos })
     }catch(error){
