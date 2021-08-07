@@ -11,6 +11,7 @@ const signupRoute = require("./api/routes/router.signup")
 const loginRoute = require("./api/routes/router.login")
 const bookmarkRoute  = require("./api/routes/router.bookmark")
 const watchlaterRoute = require("./api/routes/router.watchlater")
+const historyRoute = require("./api/routes/router.history")
 
 
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser : true, useUnifiedTopology: true },
@@ -26,6 +27,7 @@ app.use("/signup", signupRoute)
 app.use("/login", loginRoute)
 app.use("/bookmark", bookmarkRoute)
 app.use("/watchlater", watchlaterRoute)
+app.use("/history", historyRoute)
 
 app.get('/', (req,res) => {
     res.status(200).json({ message : "Prime backend" })
