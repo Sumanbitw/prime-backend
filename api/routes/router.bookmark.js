@@ -15,26 +15,14 @@ router.get("/:userId", async ( req,res ) => {
 })
 
 router.post("/:userId/:videoId", async (req,res) => {
-    const { videoId } = req.params
-  try {
-    const video = await Video.findOne({ _id: videoId });
-    const isVideoPresent = video.includes(req.body);
+    try {
+        const video = new Video(req.body)
+        const newVideo = await video.save()
+        res.json({ success : true, message : "Bookmark videos created", bookmark : newVideo })
+    }catch(error){
+        res.json({ success : false, message : "Bookmark videos cannot be created", error : error})
+    }
 
-    isVideoPresent 
-    ? video.pull(req.body) 
-    : video.push(req.body);
-
-    await video.save();
-    res.json({
-      success: true,
-      updatedVideo: video,
-      message: 'Bookmark videos updated'
-    })
-
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: 'Unable to update Bookmark videos' })
-  }
 })
 
 router.delete("/:userId/:videoId", async (req, res) => {
