@@ -17,7 +17,7 @@ router.get("/:userId", async ( req,res ) => {
 router.post("/:userId/:videoId", async (req,res) => {
     try {
         const video = new Video(req.body)
-        const newVideo = await video.save()
+        const newVideo = await video.save().populate("Video").exec()
         res.json({ success : true, message : "Bookmark videos created", bookmark : newVideo })
     }catch(error){
         res.json({ success : false, message : "Bookmark videos cannot be created", error : error})
