@@ -14,10 +14,10 @@ router.get("/:userId", async ( req,res ) => {
     }  
 })
 
-router.post("/:userId/:videoId", async (req,res) => {
+router.post("/", async (req,res) => {
     try {
         const video = new Video(req.body)
-        const newVideo = await video.save().populate("Video").exec()
+        const newVideo = await video.save()
         res.json({ success : true, message : "Bookmark videos created", bookmark : newVideo })
     }catch(error){
         res.json({ success : false, message : "Bookmark videos cannot be created", error : error})
