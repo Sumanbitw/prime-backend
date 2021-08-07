@@ -1,5 +1,5 @@
 const express = require("express")
-const watchlaterModels = require("../models/watchlater.model")
+const watchlaterVideos = require("../models/watchlater.model")
 const mongoose = require("mongoose")
 const router = express.Router()
 const Video = require("../models/video.model")
@@ -7,40 +7,28 @@ const Video = require("../models/video.model")
 router.get("/:userId", async ( req,res ) => {
     try {
         const { userId } = req.params
-        const userVideo = await watchlaterModels.find({ user : { _id : userId } }).populate('Video').exec();
+        const userVideo = await watchlaterModels.find({ user : { _id : userId } }).populate('video').exec();
         res.json({ watchlaterVideo : userVideo, success : true, message : "Video found" })
     } catch ( err ) {
         res.json({ message : err, success : false, message : "Video not found" })
     }  
 })
 
-router.post("/:userId/:videoId", async (req,res) => {
-    const { videoId } = req.params
-  try {
-    const video = await Video.findOne({ _id: videoId });
-    const isVideoPresent = video.includes(req.body);
+router.post("/", async (req,res) => {
+    try {
+        const video = new watchlaterVideos(req.body)
+        const newVideo = await video.save()
+        res.json({ success : true, message : "watchlater videos created", watchlater : newVideo })
+    }catch(error){
+        res.json({ success : false, message : "watchlater videos cannot be created", error : error})
+    }
 
-    isVideoPresent 
-    ? video.pull(req.body) 
-    : video.push(req.body);
-
-    await video.save();
-    res.json({
-      success: true,
-      updatedVideo: video,
-      message: 'Watch later videos updated'
-    })
-
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: 'Unable to update Watch later videos' })
-  }
 })
 
 router.delete("/:userId/:videoId", async (req, res) => {
     const { userId, videoId } = req.params
     try {
-        const removedWatchlaterVideos = await watchlaterModels.remove({ user : userId, video : videoId })
+        const removedWatchlaterVideos = await watchlaterVideos.remove({ user : userId, video : videoId })
         console.log(removedWatchlaterVideos)
         res.json({ success : true, message : "Video removed", removedWatchlaterVideos : removedWatchlaterVideos })
     }catch(error){
