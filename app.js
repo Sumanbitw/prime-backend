@@ -25,7 +25,7 @@ app.use('/playlists', playlistRoute)
 app.use("/signup", signupRoute)
 app.use("/login", loginRoute)
 app.use("/bookmark", bookmarkRoute)
-app.use("watchlater", watchlaterRoute)
+app.use("/watchlater", watchlaterRoute)
 
 app.get('/', (req,res) => {
     res.status(200).json({ message : "Prime backend" })
